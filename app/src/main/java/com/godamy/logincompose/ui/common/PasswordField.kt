@@ -1,5 +1,7 @@
 package com.godamy.logincompose.ui.common
 
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Icon
 import androidx.compose.material.IconToggleButton
 import androidx.compose.material.OutlinedTextField
@@ -8,15 +10,19 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.runtime.*
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 
 @Composable
-fun PasswordField(value: String, onValueChange: (String) -> Unit) {
-    var passVisible by remember {
-        mutableStateOf(false)
-    }
-
+fun PasswordField(
+    value: String,
+    onValueChange: (String) -> Unit,
+    isError: Boolean,
+    login: () -> Unit
+) {
+    var passVisible by remember { mutableStateOf(false) }
     val visualPass = if (passVisible) VisualTransformation.None else PasswordVisualTransformation()
 
     OutlinedTextField(
@@ -36,6 +42,13 @@ fun PasswordField(value: String, onValueChange: (String) -> Unit) {
                     contentDescription = "Show Password"
                 )
             }
-        }
+        },
+        isError = isError,
+        singleLine = true,
+        keyboardOptions = KeyboardOptions(
+            keyboardType = KeyboardType.NumberPassword,
+
+        ),
+        keyboardActions = KeyboardActions { login() }
     )
 }
