@@ -1,5 +1,7 @@
 package com.godamy.logincompose.ui.common
 
+import androidx.compose.animation.Crossfade
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Icon
@@ -35,12 +37,17 @@ fun PasswordField(
                 checked = passVisible,
                 onCheckedChange = { passVisible = it }
             ) {
-                val icon =
-                    if (passVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff
-                Icon(
-                    imageVector = icon,
-                    contentDescription = "Show Password"
-                )
+                Crossfade(
+                    targetState = passVisible,
+                    animationSpec = tween(1000)
+                ) {
+                    val icon =
+                        if (it) Icons.Default.Visibility else Icons.Default.VisibilityOff
+                    Icon(
+                        imageVector = icon,
+                        contentDescription = "Show Password"
+                    )
+                }
             }
         },
         isError = isError,
