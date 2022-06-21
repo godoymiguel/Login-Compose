@@ -37,9 +37,7 @@ fun Main() {
         )
 
         val borderUp by transition.animateDp(label = "transition Dp") { it.dp }
-        val borderBg by transition.animateColor(label = "transition color") {
-            Color.Gray.copy(alpha = min(1f, it / 10f))
-        }
+        val borderBg by animateColorAsState(targetValue = Color.Gray.copy(alpha = min(1f, count.toFloat() / 10f)))
 
         Box(contentAlignment = Alignment.Center) {
             Column(
