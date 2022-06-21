@@ -2,11 +2,9 @@ package com.godamy.logincompose.ui.screen
 
 import androidx.compose.animation.*
 import androidx.compose.animation.AnimatedContentScope.SlideDirection.Companion.Up
-import androidx.compose.animation.core.RepeatMode
-import androidx.compose.animation.core.infiniteRepeatable
-import androidx.compose.animation.core.keyframes
-import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
@@ -16,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import kotlin.math.min
 
 @ExperimentalAnimationApi
 @Composable
@@ -24,6 +23,8 @@ fun Main() {
         var count by remember { mutableStateOf(0) }
 
         val infiniteTransition = rememberInfiniteTransition()
+        val transition = updateTransition(targetState = count, label = "Update transition")
+
         val bgColor by infiniteTransition.animateColor(
             initialValue = Color.White,
             targetValue = Color.LightGray,
@@ -35,6 +36,11 @@ fun Main() {
             )
         )
 
+        val borderUp by transition.animateDp(label = "transition Dp") { it.dp }
+        val borderBg by transition.animateColor(label = "transition color") {
+            Color.Gray.copy(alpha = min(1f, it / 10f))
+        }
+
         Box(contentAlignment = Alignment.Center) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -42,6 +48,7 @@ fun Main() {
                 modifier = Modifier
                     .wrapContentSize()
                     .background(bgColor)
+                    .border(borderUp, borderBg)
                     .padding(16.dp)
             ) {
                 Text(
