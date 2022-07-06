@@ -12,16 +12,18 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.runtime.*
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import com.godamy.logincompose.R
 
 @Composable
 fun PasswordField(
     value: String,
     onValueChange: (String) -> Unit,
-    isError: Boolean,
+    isError: Boolean = false,
     login: () -> Unit
 ) {
     var passVisible by remember { mutableStateOf(false) }
@@ -45,7 +47,7 @@ fun PasswordField(
                         if (it) Icons.Default.Visibility else Icons.Default.VisibilityOff
                     Icon(
                         imageVector = icon,
-                        contentDescription = "Show Password"
+                        contentDescription = stringResource(id = R.string.show_password)
                     )
                 }
             }
