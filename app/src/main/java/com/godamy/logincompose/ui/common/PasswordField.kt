@@ -12,12 +12,16 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import com.godamy.logincompose.R
+
+const val PASS_TEXT_FIELD_TEST_TAG = "PassTextFieldTestTag"
+const val ICON_REVEAL_TEXT_TEST_TAG = "IconRevealTexTTestTag"
 
 @Composable
 fun PasswordField(
@@ -37,7 +41,8 @@ fun PasswordField(
         trailingIcon = {
             IconToggleButton(
                 checked = passVisible,
-                onCheckedChange = { passVisible = it }
+                onCheckedChange = { passVisible = it },
+                modifier = Modifier.testTag(ICON_REVEAL_TEXT_TEST_TAG)
             ) {
                 Crossfade(
                     targetState = passVisible,
@@ -57,7 +62,8 @@ fun PasswordField(
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.NumberPassword,
 
-        ),
-        keyboardActions = KeyboardActions { login() }
+            ),
+        keyboardActions = KeyboardActions { login() },
+        modifier = Modifier.testTag(PASS_TEXT_FIELD_TEST_TAG)
     )
 }

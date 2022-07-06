@@ -7,6 +7,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.test.platform.app.InstrumentationRegistry
+import com.godamy.logincompose.ui.common.ICON_REVEAL_TEXT_TEST_TAG
+import com.godamy.logincompose.ui.common.PASS_TEXT_FIELD_TEST_TAG
 import com.godamy.logincompose.ui.common.PasswordField
 import org.junit.Before
 import org.junit.Rule
@@ -17,24 +19,27 @@ class PasswordFieldTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
-    val ctx = InstrumentationRegistry.getInstrumentation().targetContext
+    private val ctx = InstrumentationRegistry.getInstrumentation().targetContext
 
     @Before
     fun setUp() {
         composeTestRule.setContent {
             var state by remember { mutableStateOf("") }
-            PasswordField(value = state, onValueChange = {state = it}) {}
+            PasswordField(value = state, onValueChange = { state = it }) {}
         }
     }
 
     @Test
     fun revealIconShowsPassword(): Unit = with(composeTestRule) {
-        onNodeWithText("").performTextInput("pass")
+        onNodeWithTag(PASS_TEXT_FIELD_TEST_TAG).performTextInput("pass")
+
         onRoot().printToLog("password")
-        onNodeWithText("••••").assertExists()
+        onNodeWithTag(PASS_TEXT_FIELD_TEST_TAG).assertTextContains("••••")
 
-        onNodeWithContentDescription(ctx.getString(R.string.show_password)).performClick()
+        onNodeWithTag(ICON_REVEAL_TEXT_TEST_TAG).performClick()
 
-        onNodeWithText("pass").assertExists()
+        onNodeWithTag(PASS_TEXT_FIELD_TEST_TAG).assertTextContains("pass")
+
+        onNodeWithContentDescription(ctx.getString(R.string.show_password)).assertExists()
     }
 }
