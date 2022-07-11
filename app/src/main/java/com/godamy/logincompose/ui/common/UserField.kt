@@ -8,7 +8,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 
 @Composable
-fun UserField(value: String, onValueChange: (String) -> Unit, isError: Boolean) {
+fun UserField(value: String, onValueChange: (String) -> Unit, isError: Boolean = false) {
     OutlinedTextField(
         value = value,
         onValueChange = onValueChange,
